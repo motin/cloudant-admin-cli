@@ -1,5 +1,18 @@
 require("dotenv").load();
 
+// Parse cli arguments
+var ArgumentParser = require("argparse").ArgumentParser;
+var parser = new ArgumentParser({
+  version: "0.0.1",
+  addHelp: true,
+  description: "cloud-admin",
+});
+parser.addArgument(["-cdb", "--create-db"], {
+  help: "Create new database",
+});
+var args = parser.parseArgs();
+console.dir(args);
+
 // Load the Cloudant library.
 var Cloudant = require("@cloudant/cloudant");
 
@@ -8,7 +21,7 @@ var username = process.env.cloudant_username || "admin";
 var password = process.env.cloudant_password || "pass";
 
 // Initialize the library with my account.
-var cloudant = Cloudant(
+var nano = Cloudant(
   {
     /*
     // Does not help accessing admin resources:
@@ -17,6 +30,7 @@ var cloudant = Cloudant(
     password: password,
      */
     url: `http://${username}:${password}@localhost:8080`,
+    plugins: "promises",
   },
   function(err, cloudant, reply) {
     if (err) {
@@ -26,13 +40,19 @@ var cloudant = Cloudant(
   },
 );
 
-cloudant.db.list(function(err, allDbs) {
-  if (err) {
-    throw err;
-  }
+const run = async () => {
+  const allDbs = await nano.db.list();
+
   if (!allDbs) {
     console.log("No databases available");
   } else {
     console.log("All my databases: %s", allDbs.join(", "));
   }
-});
+
+  if (args.create_db) {
+    const body = await nano.db.create(args.create_db);
+    console.log(`Database ${args.create_db} created!`);
+  }
+};
+
+run();

@@ -9,7 +9,8 @@
   },
   "author": "",
   "dependencies": {
-    "@cloudant/cloudant": "^2.3.0"
+    "@cloudant/cloudant": "^2.3.0",
+    "argparse": "^1.0.10"
   },
   "devDependencies": {
     "dotenv": "^6.0.0",
