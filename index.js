@@ -10,6 +10,9 @@ var parser = new ArgumentParser({
 parser.addArgument(["-cdb", "--create-db"], {
   help: "Create new database",
 });
+parser.addArgument(["-rdb", "--reset-db"], {
+  help: "Delete and re-create database",
+});
 var args = parser.parseArgs();
 console.dir(args);
 
@@ -49,9 +52,15 @@ const run = async () => {
     console.log("All my databases: %s", allDbs.join(", "));
   }
 
+  if (args.reset_db) {
+    const body = await nano.db.destroy(args.reset_db);
+    console.log(`Database ${args.reset_db} deleted!`, body);
+    args.create_db = args.reset_db;
+  }
+
   if (args.create_db) {
     const body = await nano.db.create(args.create_db);
-    console.log(`Database ${args.create_db} created!`);
+    console.log(`Database ${args.create_db} created!`, body);
   }
 };
 
