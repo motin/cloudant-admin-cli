@@ -61,6 +61,21 @@ const run = async () => {
   if (args.create_db) {
     const body = await nano.db.create(args.create_db);
     console.log(`Database ${args.create_db} created!`, body);
+
+    const db = await nano.use(args.create_db);
+    console.log(`Using database ${args.create_db}`, await db.info());
+    const res = await db.insert({
+      version: 0,
+      _id: "_design/app",
+      filters: {
+        by_model: function(doc, req) {
+          return (
+            doc._id === "_design/app" || doc.rx_model === req.query.rx_model
+          );
+        },
+      },
+    });
+    console.log(`RxDB replication design doc created!`, res);
   }
 };
 
