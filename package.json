@@ -1,6 +1,6 @@
 {
-  "name": "cloud-admin",
-  "version": "1.0.0",
+  "name": "cloudant-admin-cli",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
