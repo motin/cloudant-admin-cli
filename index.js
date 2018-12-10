@@ -1,4 +1,4 @@
-require("dotenv").load();
+require("dotenv-safe").load();
 
 // Parse cli arguments
 var ArgumentParser = require("argparse").ArgumentParser;

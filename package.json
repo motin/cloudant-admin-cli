@@ -10,10 +10,10 @@
   "author": "",
   "dependencies": {
     "@cloudant/cloudant": "^2.3.0",
-    "argparse": "^1.0.10"
+    "argparse": "^1.0.10",
+    "dotenv-safe": "^6.0.0"
   },
   "devDependencies": {
-    "dotenv": "^6.0.0",
     "prettier": "^1.14.3"
   }
 }
