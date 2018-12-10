@@ -2,10 +2,12 @@ require("dotenv-safe").load();
 
 // Parse cli arguments
 var ArgumentParser = require("argparse").ArgumentParser;
+var packageJson = require("./package.json");
+console.log("packageJson", packageJson);
 var parser = new ArgumentParser({
-  version: "0.0.1",
+  version: packageJson.version,
   addHelp: true,
-  description: "cloud-admin",
+  description: `${packageJson.name} - ${packageJson.description}`,
 });
 parser.addArgument(["-cdb", "--create-db"], {
   help: "Create new database",
