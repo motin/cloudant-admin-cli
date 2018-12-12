@@ -1,0 +1,20 @@
+# Docker compose configuration for local development
+version: '3.3'
+services:
+
+  # Local Cloudant Developer server to mimic IBM Cloudant
+  local-cloudant-developer:
+    build:
+      context: stack/cloudant-developer
+    image: local-cloudant-developer
+    container_name: local-cloudant-developer
+    hostname: localhost
+    ports:
+    - "8080:80"
+    volumes:
+    - local-cloudant-developer-persistent:/srv
+    network_mode: bridge
+
+volumes:
+  local-cloudant-developer-persistent:
+    external: true
