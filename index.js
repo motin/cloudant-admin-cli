@@ -24,6 +24,8 @@ var Cloudant = require("@cloudant/cloudant");
 // Initialize Cloudant with settings from .env
 var username = process.env.cloudant_username || "admin";
 var password = process.env.cloudant_password || "pass";
+var host = process.env.cloudant_host || "localhost";
+var port = process.env.cloudant_port || "8080";
 
 // Initialize the library with my account.
 var nano = Cloudant(
@@ -34,7 +36,7 @@ var nano = Cloudant(
     username: username,
     password: password,
      */
-    url: `http://${username}:${password}@localhost:8080`,
+    url: `http://${username}:${password}@${host}:${port}`,
     plugins: "promises",
   },
   function(err, cloudant, reply) {
