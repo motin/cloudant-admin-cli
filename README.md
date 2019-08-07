@@ -3,6 +3,7 @@
 ```
 node index.js --create-db localdevtest
 node index.js --reset-db localdevtest
+node index.js --add-rxdb-replication-design-doc localdevtest
 ```
 
 ## Start local Cloudant instance

@@ -15,6 +15,10 @@ parser.addArgument(["-cdb", "--create-db"], {
 parser.addArgument(["-rdb", "--reset-db"], {
   help: "Delete and re-create database",
 });
+parser.addArgument(["-repdoc", "--add-rxdb-replication-design-doc"], {
+  help: "Add RxDB replication design doc",
+});
+
 var args = parser.parseArgs();
 console.dir(args);
 
@@ -64,10 +68,13 @@ const run = async () => {
 
   if (args.create_db) {
     const body = await nano.db.create(args.create_db);
+    args.add_rxdb_replication_design_doc = args.create_db;
     console.log(`Database ${args.create_db} created!`, body);
+  }
 
-    const db = await nano.use(args.create_db);
-    console.log(`Using database ${args.create_db}`, await db.info());
+  if (args.add_rxdb_replication_design_doc) {
+    const db = await nano.use(args.add_rxdb_replication_design_doc);
+    console.log(`Using database ${args.add_rxdb_replication_design_doc}`, await db.info());
     const res = await db.insert({
       version: 0,
       _id: "_design/app",
@@ -79,7 +86,7 @@ const run = async () => {
         },
       },
     });
-    console.log(`RxDB replication design doc created!`, res);
+    console.log(`RxDB replication design doc added!`, res);
   }
 };
 
